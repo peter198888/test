@@ -4,949 +4,435 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreetlifeTrends</title>
+    <title>Witgoed Den</title>
     <style>
+        :root {
+            --background-color: #050505;
+            --machine-white: white;
+            --machine-feature-gray: #A3A1A1;
+            --accent-green: #5FBD9D;
+            --darkest-gray: #636161;
+        }
+
+        body {
+            background: var(--background-color);
+        }
+
+        .box-canvas {
+            position: relative;
+            margin: auto;
+            display: block;
+            margin-top: 8%;
+            margin-bottom: 8%;
+            width: 600px;
+            height: 600px;
+            background: var(--background-color);
+        }
+
+        /* Main machine body */
+        .machine {
+            position: absolute;
+            left: 150px;
+            top: 100px;
+            width: 300px;
+            height: 400px;
+            background: var(--machine-white);
+            border-radius: 2%;
+        }
+
+
+        /* Powder drawer */
+        .drawer {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100px;
+            height: 50px;
+            border: 2px solid var(--machine-feature-gray);
+            border-radius: 0 0 20% 0;
+        }
+
+        /* Drawer handle */
+        .drawer::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 15px;
+            background: var(--machine-feature-gray);
+            bottom: 5px;
+            right: 5px;
+            border-radius: 0 0 30% 0;
+        }
+
+        /* Small LED display */
+        .panel {
+            position: absolute;
+            width: 40px;
+            height: 15px;
+            background: var(--darkest-gray);
+            left: 150px;
+            top: 30px;
+        }
+
+        /* Light indicator in panel */
+        .panel::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 10px;
+            background: var(--accent-green);
+            right: 5px;
+            top: 2px;
+        }
+
+        /* Machine dial */
+        .panel::after {
+            content: '';
+            position: absolute;
+            left: 80px;
+            top: -10px;
+            width: 35px;
+            height: 35px;
+            border: 2px solid var(--machine-feature-gray);
+            border-radius: 50%;
+        }
+
+        /* Center of washer door, width border forming the frame */
+        .door {
+            position: absolute;
+            background: var(--machine-white);
+            left: 60px;
+            bottom: 90px;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            border: 5px solid var(--machine-feature-gray);
+            overflow: hidden;
+        }
+
+        /* Reflection on door surface */
+        .door::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(transparent 30%, white);
+        }
+
+        /* Washing machine drum */
+        .drum {
+            position: absolute;
+            left: 25px;
+            top: 25px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--darkest-gray);
+            overflow: hidden;
+            animation: drumRotate 2s infinite;
+        }
+
+        /* Clothes inside machine */
+        .drum::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 50px;
+            background: var(--accent-green);
+            border-radius: 40%;
+            bottom: 0;
+        }
+
+
+
+        @keyframes drumRotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+        }
+
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            list-style: none;
+            text-decoration: none;
+
         }
 
-        .scaling-svg-container {
+        body {
+            height: 100vh;
+            background-image: linear-gradient(45deg, #1e375c 30%, 100%);
+        }
+
+        .menu_wrapper {
+            padding: 20px;
+            perspective: 300px;
+
+        }
+
+        ul,
+        li {
+            cursor: pointer;
+        }
+
+        nav {
             position: relative;
-            height: 0;
-            width: 100%;
-            padding: 0;
+            width: 230px;
+            max-width: 360px;
+            margin: 100px auto;
+            transform-style: preserve-3d;
+            animation: big 2s forwards,
+                ball 1s 2s ease-in-out infinite alternate;
+
         }
 
-        .scaling-svg {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            left: 0;
-            top: 0;
+        .main {
+            transform-style: preserve-3d;
+            transform: perspective(400px) rotateY(0deg);
+
+
+
         }
 
-        .FATHER {
+        li {
+            margin: 5px;
+            position: relative;
+            transition: all 0.2s;
+            transform-style: preserve-3d;
+            border-radius: 6px;
+            border: 1px solid #fbcc34;
+        }
+
+        li:hover {
+            background-image: linear-gradient(45deg, rgba(251, 255, 52, .2) 30%, rgba(255, 173, 54, .5) 100%);
+            transform: translateZ(30px) rotateY(4deg);
+        }
+
+        li:hover ul {
+            opacity: .5;
+            visibility: visible;
+            transform: translateZ(60px) rotateY(-25deg);
+        }
+
+        li:hover ul li {
+            margin-left: 5px;
+            transition: all 0.4s;
+        }
+
+        a {
             display: block;
-            width: 100%;
-            padding: 180px 40px 30px 40px;
-            background: #fcfbfb;
-            overflow: hidden;
-            position: relative;
+            padding: 5px;
+            line-height: 40px;
+            color: #fff;
+            font-size: 24px;
+            transition: all 0.2s;
+            font-family: Alegreya Sans;
         }
 
-        .big-prize {
-            font-size: 154px;
+        a:hover {
+            color: #222;
+            font-size: 28px;
         }
 
-        [class*="prize-2"] {
-            text-anchor: middle;
-            stroke-width: .03em;
-            stroke-miterlimit: 10;
-            font-weight: 700;
-            letter-spacing: -.05em;
+        .sub1,
+        .sub2 {
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            left: 80%;
+            top: 0;
+            padding-left: 30px;
+            min-width: 300px;
+            transition: all 0.2s;
+            transform: translateZ(-11px) rotateY(-26deg) translateX(140px);
         }
 
-        .prize-2 {
-            fill: #fff;
-            stroke: #fff;
+        .button1,
+        .button2 {
+            display: inline-block;
+            line-height: 30px;
+            width: 45%;
+            margin: 0 0 0.325em -3em;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.7);
+            transform-style: preserve-3d;
+
         }
 
-        .prize-2-shadow {
-            stroke: #000000;
-            fill: #000000;
+        .button1 a,
+        .button2 a {
+            color: #111 font-size: 16px;
+            line-height: 120%;
+            border-radius: 6px;
+            font-family: 'Work Sans', sans-serif;
+
         }
 
-        .is-shadow {
-            opacity: 0.1;
-            transform: translate(-0.02em, 0.02em);
+        .button1 a:hover,
+        .button2 a:hover {
+            background: #fbcc34;
+            animation: hover 1s;
         }
 
-        .is-shadow-2 {
-            opacity: 0.1;
-            transform: translate(-0.04em, 0.04em);
+        .text {
+            text-align: center;
+            color: #ddd;
+            font-family: Alegreya Sans;
+            text-shadow: 1px 1px 5px #555;
         }
 
-        /*************/
-        .modal {
-            animation: fadeIn 500ms both;
-        }
-
-        .ball-left {
-            animation: fadeInRight 500ms both ease-out;
-        }
-
-        .ball-right {
-            animation: fadeInLeft 500ms both ease-out;
-        }
-
-        .ball-blue {
-            animation-delay: 340ms;
-            transform-origin: center 2em;
-        }
-
-        .ball-violet {
-            animation-delay: 385ms;
-            transform-origin: center 2em;
-        }
-
-        .ball-orange {
-            animation-delay: 420ms;
-            transform-origin: center 2em;
-        }
-
-        .ball-yellow {
-            animation-delay: 350ms;
-            transform-origin: center 2em;
-        }
-
-        .ball-green {
-            animation-delay: 395ms;
-            transform-origin: center 2em;
-        }
-
-        .ball-red {
-            animation-delay: 430ms;
-            transform-origin: center 2em;
-        }
-
-        .popIn {
-            animation: popIn 500ms both;
-        }
-
-        .prize-title-label {
-            animation-delay: 250ms;
-            transform-origin: center 2em;
-        }
-
-        .crown {
-            animation-delay: 550ms;
-            transform-origin: center 2em;
-        }
-
-        [class*="star-"] {
-            animation: zoomIn 500ms both cubic-bezier(0.055, 1.09, 0.115, 0.97);
-            transform-origin: center 1.6em;
-        }
-
-        .star-1 {
-            animation-delay: 570ms;
-        }
-
-        .star-2 {
-            animation-delay: 610ms;
-        }
-
-        .star-3 {
-            animation-delay: 550ms;
-        }
-
-        .star-4 {
-            animation-delay: 590ms;
-        }
-
-        .star-5 {
-            animation-delay: 630ms;
-        }
-
-        @keyframes fadeInLeft {
+        @keyframes big {
             0% {
-                transform: translateX(-1em) scale(0);
+                transform: rotateY(-90deg);
             }
 
-            100% {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-            }
-        }
-
-        @keyframes fadeInRight {
-            from {
-                transform: translateX(1em) scale(0);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateX(0) scale(1);
-            }
-        }
-
-        @keyframes popIn {
-            0% {
-                transform: scale(0);
+            25% {
+                transform: rotateY(270deg);
             }
 
             50% {
-                transform: scale(1.125);
-            }
-
-            65% {
-                transform: scale(0.95);
-            }
-
-            85% {
-                transform: scale(1.025);
+                transform: rotateY(630deg);
             }
 
             100% {
-                transform: scale(1);
+                transform: rotateY(759deg);
             }
         }
 
-        @keyframes zoomIn {
+        @keyframes hover {
             0% {
-                transform: scale(0);
+                transform: perspective(300px) rotateX(0deg);
+            }
+
+            50% {
+                transform: perspective(300px) rotateX(-300deg);
             }
 
             100% {
-                transform: scale(1);
+                transform: perspective(300px) rotateX(0deg);
             }
         }
 
-        @keyframes fadeIn {
+        @keyframes ball {
             0% {
-                opacity: 0;
-                transform: translateY(4em);
+                top: 0px;
+            }
+
+            50% {
+                top: 5px;
             }
 
             100% {
-                opacity: 1;
-                transform: translateY(0em);
+                top: 0px;
             }
         }
-
-        .rubino .lgt-bg {
-            background-color: #E60505;
-        }
-
-        .rubino .lgt-fill {
-            fill: #E60505;
-        }
-
-        .rubino .lgt-stroke {
-            stroke: #E60505;
-        }
-
-        .rubino .drk-bg {
-            background-color: #CC0000;
-        }
-
-        .rubino .drk-fill {
-            fill: #CC0000;
-        }
-
-        .rubino .drk-stroke {
-            stroke: #CC0000;
-        }
-
-        .smeraldo .lgt-bg {
-            background-color: #01A601;
-        }
-
-        .smeraldo .lgt-fill {
-            fill: #01A601;
-        }
-
-        .smeraldo .lgt-stroke {
-            stroke: #01A601;
-        }
-
-        .smeraldo .drk-bg {
-            background-color: #017D01;
-        }
-
-        .smeraldo .drk-fill {
-            fill: #017D01;
-        }
-
-        .smeraldo .drk-stroke {
-            stroke: #017D01;
-        }
-
-        .zaffiro .lgt-bg {
-            background-color: #028BFF;
-        }
-
-        .zaffiro .lgt-fill {
-            fill: #028BFF;
-        }
-
-        .zaffiro .lgt-stroke {
-            stroke: #028BFF;
-        }
-
-        .zaffiro .drk-bg {
-            background-color: #02478D;
-        }
-
-        .zaffiro .drk-fill {
-            fill: #02478D;
-        }
-
-        .zaffiro .drk-stroke {
-            stroke: #02478D;
-        }
-
-        .diamante .lgt-bg {
-            background-color: #ff8332;
-        }
-
-        .diamante .lgt-fill {
-            fill: #ff8332;
-        }
-
-        .diamante .lgt-stroke {
-            stroke: #ff8332;
-        }
-
-        .diamante .drk-bg {
-            background-color: #ff6500;
-        }
-
-        .diamante .drk-fill {
-            fill: #ff6500;
-        }
-
-        .diamante .drk-stroke {
-            stroke: #ff6500;
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: #050801;
-            font-family: 'Raleway', sans-serif;
-            font-weight: bold;
-        }
-
-        a {
-            position: relative;
-            display: inline-block;
-            padding: 25px 30px;
-            margin: 40px 0;
-            color: #03e9f4;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: 0.5s;
-            letter-spacing: 4px;
-            overflow: hidden;
-            margin-right: 50px;
-
-        }
-
-        a:hover {
-            background: #03e9f4;
-            color: #050801;
-            box-shadow: 0 0 5px #03e9f4,
-                0 0 25px #03e9f4,
-                0 0 50px #03e9f4,
-                0 0 200px #03e9f4;
-            -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
-        }
-
-        a:nth-child(1) {
-            filter: hue-rotate(270deg);
-        }
-
-        a:nth-child(2) {
-            filter: hue-rotate(110deg);
-        }
-
-        a span {
-            position: absolute;
-            display: block;
-        }
-
-        a span:nth-child(1) {
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #03e9f4);
-            animation: animate1 1s linear infinite;
-        }
-
-        @keyframes animate1 {
-            0% {
-                left: -100%;
-            }
-
-            50%,
-            100% {
-                left: 100%;
-            }
-        }
-
-        a span:nth-child(2) {
-            top: -100%;
-            right: 0;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(180deg, transparent, #03e9f4);
-            animation: animate2 1s linear infinite;
-            animation-delay: 0.25s;
-        }
-
-        @keyframes animate2 {
-            0% {
-                top: -100%;
-            }
-
-            50%,
-            100% {
-                top: 100%;
-            }
-        }
-
-        a span:nth-child(3) {
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(270deg, transparent, #03e9f4);
-            animation: animate3 1s linear infinite;
-            animation-delay: 0.50s;
-        }
-
-        @keyframes animate3 {
-            0% {
-                right: -100%;
-            }
-
-            50%,
-            100% {
-                right: 100%;
-            }
-        }
-
-
-        a span:nth-child(4) {
-            bottom: -100%;
-            left: 0;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(360deg, transparent, #03e9f4);
-            animation: animate4 1s linear infinite;
-            animation-delay: 0.75s;
-        }
-
-        @keyframes animate4 {
-            0% {
-                bottom: -100%;
-            }
-
-            50%,
-            100% {
-                bottom: 100%;
-            }
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: #050801;
-            font-family: 'Raleway', sans-serif;
-            font-weight: bold;
-        }
-
-        a {
-            position: relative;
-            display: inline-block;
-            padding: 25px 30px;
-            margin: 40px 0;
-            color: #03e9f4;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: 0.5s;
-            letter-spacing: 4px;
-            overflow: hidden;
-            margin-right: 50px;
-
-        }
-
-        a:hover {
-            background: #03e9f4;
-            color: #050801;
-            box-shadow: 0 0 5px #03e9f4,
-                0 0 25px #03e9f4,
-                0 0 50px #03e9f4,
-                0 0 200px #03e9f4;
-            -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
-        }
-
-        a:nth-child(1) {
-            filter: hue-rotate(270deg);
-        }
-
-        a:nth-child(2) {
-            filter: hue-rotate(110deg);
-        }
-
-        a span {
-            position: absolute;
-            display: block;
-        }
-
-        a span:nth-child(1) {
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #03e9f4);
-            animation: animate1 1s linear infinite;
-        }
-
-        @keyframes animate1 {
-            0% {
-                left: -100%;
-            }
-
-            50%,
-            100% {
-                left: 100%;
-            }
-        }
-
-        a span:nth-child(2) {
-            top: -100%;
-            right: 0;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(180deg, transparent, #03e9f4);
-            animation: animate2 1s linear infinite;
-            animation-delay: 0.25s;
-        }
-
-        @keyframes animate2 {
-            0% {
-                top: -100%;
-            }
-
-            50%,
-            100% {
-                top: 100%;
-            }
-        }
-
-        a span:nth-child(3) {
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(270deg, transparent, #03e9f4);
-            animation: animate3 1s linear infinite;
-            animation-delay: 0.50s;
-        }
-
-        @keyframes animate3 {
-            0% {
-                right: -100%;
-            }
-
-            50%,
-            100% {
-                right: 100%;
-            }
-        }
-
-
-        a span:nth-child(4) {
-            bottom: -100%;
-            left: 0;
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(360deg, transparent, #03e9f4);
-            animation: animate4 1s linear infinite;
-            animation-delay: 0.75s;
-        }
-
-        @keyframes animate4 {
-            0% {
-                bottom: -100%;
-            }
-
-            50%,
-            100% {
-                bottom: 100%;
-            }
-        }
-
-        /*# sourceMappingURL=style.css.map */
     </style>
 </head>
 
+
 <body>
-    <div id="app" class="FATHER" :class="roomSelected" style="padding-top: 10px">
+    <div class="menu_wrapper">
+        <nav>
+            <div class="main">
 
-        <div class="modal">
-
-
-            <div class="scaling-svg-container" style="padding-bottom: 46%; margin-bottom: 3rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" class="scaling-svg big-prize bingo" x="0px" y="0px"
-                    viewBox="0 0 1000 465">
-                    <defs>
-                        <style>
-                            /* @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&display=swap');*/
-                        </style>
-                    </defs>
-                    <rect style="fill:transparent" width="1000" height="465" />
-                    <rect class="drk-fill" x="45" y="230" width="910" height="195" />
-                    <g class="ball-blue ball-left">
-                        <circle style="fill:#FFFFFF;" cx="152.629" cy="261.191" r="34.991" />
-                        <path style="fill:#0071BC;"
-                            d="M166.001,228.855c-17.858-7.385-38.322,1.105-45.707,18.963
-                                       c-7.385,17.858,1.105,38.322,18.963,45.707c17.858,7.385,38.322-1.105,45.707-18.963
-                                       C192.349,256.704,183.859,236.24,166.001,228.855z M120.997,248.109c0.033-0.081,0.059-0.162,0.093-0.243
-                                       c3.268-7.903,9.158-13.922,16.241-17.486c-0.627,3.046-2.398,6.978-6.875,10.928
-                                       C126.829,244.508,123.601,246.664,120.997,248.109z M163.46,280.375c-5.569,8.249-17.29,11.076-26.477,4.879
-                                       c-9.187-6.198-9.267-17.022-6.064-23.61c3.204-6.589,13.737-13.504,25.008-5.965C165.285,261.938,169.028,272.127,163.46,280.375
-                                       z M167.468,236.471c-6.956-5.177-10.041-8.023-11.31-9.588c3.241,0.327,6.49,1.12,9.655,2.428
-                                       c7.495,3.1,13.297,8.558,16.917,15.156C181.248,244.888,177.407,243.868,167.468,236.471z M184.367,274.034
-                                       c-1.47,3.556-3.478,6.724-5.878,9.466c0.462-3.352,1.268-8.21,2.437-11.729c1.435-4.32,4.503-8.861,6.046-10.987
-                                       C186.996,265.202,186.161,269.697,184.367,274.034z M144.225,260.492c14.832,2.116,14.313,8.469,12.847,12.087
-                                       c-2.497,6.161-10.608,5.924-14.597,5.713c2.467,1.861,7.439,4.276,7.439,4.276l-3.198,2.395c0,0-7.608-3.146-13.798-9.063
-                                       c0,0,0.508-1.228,1.312-3.174c5.702,1.878,15.402,1.558,15.722-2.985c0.321-4.544-6.664-4.81-6.664-4.81L144.225,260.492" />
-                        <path style="opacity:0.3;fill:#433C32;"
-                            d="M129.741,244.849c0-3.594,0.514-7.066,1.452-10.359
-                                                   c-4.356,3.491-7.919,8.095-10.203,13.617c-7.226,17.474,1.081,37.497,18.555,44.723c15.465,6.395,32.92,0.617,41.739-12.909
-                                                   c-4.286,1.693-8.95,2.633-13.838,2.633C146.622,282.554,129.741,265.672,129.741,244.849" />
-                    </g>
-                    <g class="position-ball position-ball--violet" style="transform: translate(-1.2em, -.3em)">
-                        <g class="ball-violet ball-left">
-                            <circle style="fill:#FFFFFF;" cx="245.171" cy="325.604" r="40" />
-                            <path style="fill:#ED1E79;" d="M239.261,286.855l-5.743,3.12l-10.118,3.387C228.051,290.112,233.437,287.845,239.261,286.855z
-                                         M273.197,323.232c0.006,0.04-0.011,0.076-0.049,0.089c-0.427,0.144-3.031,0.979-2.995,1.085
-                                         c0.51,1.492,1.483,5.277,1.506,5.665c0.003,0.041-0.001,0.073-0.038,0.092c-0.508,0.259-4.204,2.116-7.355,3.085
-                                         c-0.124,0.038-0.254-0.03-0.292-0.154c-0.633-2.027-1.235-4.661-1.387-5.341c-0.018-0.086-0.109-0.127-0.185-0.085
-                                         c-1.22,0.661-9.55,5.157-10.457,5.146c-0.034,0-0.058-0.03-0.067-0.062c-1.7-5.848-0.935-15.34,0.01-24.209
-                                         c0.003-0.03,0.023-0.055,0.049-0.066l9.359-4.023c0.041-0.017,0.081-0.001,0.105,0.037c4.089,6.28,6.756,14.296,7.195,15.53
-                                         c0.014,0.038,0.059,0.048,0.097,0.037c2.452-0.716,3.444-1.057,3.723-1.157c0.049-0.017,0.098,0.016,0.104,0.066
-                                         L273.197,323.232z M261.457,321.981c-0.304-0.973-2.205-6.961-3.655-9.228c-0.04-0.064-0.136-0.033-0.141,0.041
-                                         c-0.109,1.209-0.607,7.031-0.616,11.118c-0.001,0.055,0.054,0.092,0.105,0.072c1.64-0.629,3.695-1.568,4.222-1.811
-                                         C261.447,322.139,261.481,322.06,261.457,321.981z M285.171,325.604c0,22.092-17.909,40.001-40.001,40.001
-                                         c-22.09,0-39.999-17.909-39.999-40.001s17.909-40.001,39.999-40.001C267.262,285.603,285.171,303.512,285.171,325.604z
-                                         M212.01,331.015c-2.754-10.392-5.214-13.601-5.294-13.703c-0.571,2.668-0.879,5.434-0.879,8.274
-                                         c0,3.408,0.439,6.712,1.256,9.866l0.006-4.684l-0.968-0.475c-0.184-1.54-0.288-3.102-0.288-4.691
-                                         c0-0.374,0.018-0.744,0.028-1.117l0.751,1.117l2.855,9.938l1.228,1.393l0.401,3.25l-0.35,0.434l0.804,5.386
-                                         c0.935,1.534,1.966,3.003,3.095,4.39C214.737,346.44,214.35,339.847,212.01,331.015z M233.349,292.335
-                                         c5.031-2.11,8.416-4.447,10.373-6.03c-9.089,0.319-17.392,3.716-23.898,9.188C219.893,295.495,225.506,295.625,233.349,292.335z
-                                         M264.65,359.744c-2.161-0.473-6.534-1.116-13.057-0.6c-9.548,0.754-15.132,4.66-15.273,4.76
-                                         c2.845,0.654,5.803,1.011,8.846,1.011C252.257,364.915,258.905,363.028,264.65,359.744z M278.426,322.496
-                                         c-0.128-15.4-11.588-22.971-20.747-22.655c-7.382,0.254-19.218,5.728-19.218,21.7c0,15.974,13.745,21.701,21.764,21.701
-                                         C268.244,343.243,278.553,337.897,278.426,322.496z" />
-                            <path style="opacity:0.3;fill:#433C32;"
-                                d="M222.732,301.514c0-3.016,0.305-5.959,0.887-8.803
-                                                     c-10.704,7.027-17.778,19.131-17.778,32.893c0,21.72,17.608,39.328,39.329,39.328c15.492,0,28.887-8.961,35.297-21.98
-                                                     c-4.396,1.485-9.099,2.302-13.995,2.302C242.315,345.255,222.732,325.671,222.732,301.514" />
-                        </g>
-
-                    </g>
-                    <g class="ball-yellow ball-right">
-                        <circle style="fill:#FFFFFF;" cx="848.467" cy="279.088" r="29" />
-                        <path style="fill:#FFCC10;"
-                            d="M847.977,250.092c-16.014,0.272-28.776,13.472-28.506,29.486
-                                       c0.272,16.014,13.472,28.776,29.486,28.506c16.014-0.27,28.776-13.472,28.506-29.486
-                                       C877.192,262.584,863.991,249.822,847.977,250.092z M825.804,274.938c-1.199,7.805-2.224,12.054-4.324,13.849
-                                       c-1.037-2.883-1.632-5.98-1.686-9.214c-0.108-6.395,1.887-12.335,5.346-17.164C826.934,264.122,826.975,267.315,825.804,274.938z
-                                       M847.983,250.415c2.982-0.05,5.866,0.357,8.584,1.156c-2.031,1.217-5.391,2.573-10.731,3.152
-                                       c-6.149,0.667-9.329-0.113-10.928-0.901C838.808,251.725,843.25,250.495,847.983,250.415z M830.84,301.703
-                                       c1.081-0.045,3.694-0.015,7.012,1.002c2.939,0.9,6.485,3.159,8.552,4.981C840.567,307.272,835.202,305.107,830.84,301.703z
-                                       M844.745,275.236c3.805-17.896,35.171-11.927,27.687,11.592C867.613,301.973,839.157,301.521,844.745,275.236z M822.372,267.185
-                                       c0.374,1.343,0.619,3.338,0.349,6.262c-0.392,4.24-1.721,7.372-2.71,9.191c-0.124-1.007-0.2-2.028-0.217-3.065
-                                       c-0.027-1.583,0.081-3.138,0.302-4.656c0.339-0.327,0.625-0.757,0.685-1.309c0.053-0.479-0.001-1.054-0.099-1.616
-                                       C821.105,270.328,821.67,268.72,822.372,267.185 M845.784,251.665c-2.172,0.216-3.578-0.006-4.491-0.34
-                                       c2.143-0.552,4.381-0.87,6.69-0.91c0.586-0.01,1.168,0.004,1.747,0.029C848.885,250.995,847.641,251.48,845.784,251.665
-                                       M837.566,305.113c1.113,0.331,1.903,0.833,2.474,1.387c-1.534-0.472-3.013-1.068-4.426-1.778
-                                       C836.177,304.774,836.821,304.892,837.566,305.113 M862.069,269.961c-3.913-0.48-7.38,1.217-7.843,6.14
-                                       c-0.227,2.403,1.076,10.024,7.737,8.272c-0.592,3.624-4.828,2.275-7.596,1.338c0.023,1.311-0.668,4.491-0.668,4.491
-                                       s11.193,4.617,14.431-5.816C870.888,275.503,865.983,270.441,862.069,269.961 M862.393,280.989
-                                       c-3.491,0.277-3.392-6.824-0.113-6.662C864.791,274.452,865.884,280.711,862.393,280.989" />
-                        <path style="opacity:0.3;fill:#433C32;"
-                            d="M837.856,301.228c-3.183,0-6.253-0.476-9.149-1.352
-                                                   c5.289,5.191,12.572,8.343,20.568,8.208c15.836-0.267,28.455-13.322,28.188-29.158c-0.149-8.848-4.292-16.69-10.681-21.843
-                                                   c1.683,3.86,2.622,8.118,2.622,12.597C869.404,287.104,855.279,301.228,837.856,301.228" />
-                    </g>
-
-                    <g class="position-ball position-ball--green" style="transform: translate(1.2em, -.4em)">
-                        <g class="ball-green ball-right">
-                            <circle style="fill:#FFFFFF;" cx="764.43" cy="342.622" r="44.987" />
-                            <path style="fill:#006309;" d="M759.036,363.508c0,0,0.496,4.272,0.496,5.363c-8.233,0.694-15.672,0.713-17.457,0.713
-                                         c-0.198-2.678,0.496-5.111,2.182-7.392c1.686-2.281,7.638-7.793,7.34-11.016c-0.091-0.988,0.397-3.496-3.868-3.496
-                                         c-4.265,0-3.273,5.32-3.273,5.32h-4.76c0,0-1.19-9.782,7.735-10.674c8.927-0.893,10.025,5.263,10.025,8.736
-                                         c0,5.056-7.843,13.221-7.843,13.221L759.036,363.508z M769.847,362.991c0,0,7.538-8.669,7.142-13.191
-                                         c-0.303-3.46-0.298-9.502-9.324-9.423c-8.926,0.893-7.315,9.919-7.315,9.919l4.541-0.571c0,0-1.169-3.538,3.071-3.992
-                                         c2.777-0.298,3.659,1.878,3.807,4.255c0.099,1.587-5.592,8.638-7.278,10.919c-1.686,2.281-2.38,4.761-2.182,7.439
-                                         c1.785,0,9.025,0,17.456-1.785c0.358-0.575-0.496-4.265-0.496-4.265L769.847,362.991z M806.865,357.559
-                                         c-8.25,23.437-33.937,35.748-57.373,27.497c-23.437-8.249-35.748-33.936-27.498-57.373
-                                         c8.249-23.437,33.936-35.748,57.373-27.497C802.804,308.437,815.115,334.124,806.865,357.559z M733.762,310.672
-                                         c0.062,0.354,0.157,0.699,0.317,1.019c1.577,3.154,9.46,4.444,20.926,3.44c11.461-1.003,30.081-5.924,26.879-13.202
-                                         c-0.9-0.385-1.812-0.754-2.751-1.084c-2.444-0.86-4.914-1.489-7.385-1.906c-1.104,1.357-5.566,1.359-7.642,2.399
-                                         c0.431-0.105,5.876,0.75,5.876,0.75l-0.502,1.815c0,0-3.511-0.453-5.947-0.524c-2.437-0.072-6.45,0-6.45,0
-                                         s-0.143-0.86,2.123-2.365c2.266-1.505,6.693-1.505,7.982-2.222c0.214-0.119,0.377-0.232,0.519-0.34
-                                         c-4.023-0.3-8.015-0.044-11.88,0.727c-4.143,2.165-5.377,3.241-5.377,3.241l5.702-1.081c0,0-0.715,0.72-1.289,2.04
-                                         c-6.378,1.217-11.609,3.153-11.609,3.153s0.679-1.362,2.006-2.629c0.537-0.513,2.121-1.647,3.815-2.814
-                                         C743.399,303.193,738.172,306.445,733.762,310.672z M784.819,353.185c-0.717-15.552-18.92-22.216-30.1-21.212
-                                         c-8.091,0.726-21.857,8.743-21.14,22.933c0.715,14.19,15.193,25.298,29.526,24.51
-                                         C777.438,378.626,785.536,368.737,784.819,353.185z M808.71,343.695c-1.015,1.359-2.74,3.751-3.501,4.801
-                                         c-0.388-2.602-0.213-3.728-0.074-5.773c0.161-2.365,0.71-5.132,0.638-6.279c-0.106-1.717,0.062-3.718-0.476-3.934
-                                         c-1.32-0.529-0.322,2.848-0.322,2.848l-1.749,2.419c0,0-1.692-9.019,2.016-9.244c1.456,0.067,1.878,3.574,2.097,6.073
-                                         c0.286,3.268-0.76,7.774-0.76,7.774l1.995-2.595c0,0,0.025,0.06,0.067,0.156c-0.598-9.726-4.408-18.982-10.728-26.298
-                                         c-0.439,0.088-0.778,0.258-0.913,0.557c-0.63,1.4-0.985,50.407,5.616,50.852c1.414-2.412,2.626-4.988,3.588-7.724
-                                         C807.792,352.819,808.601,348.227,808.71,343.695z" />
-                            <path style="opacity:0.3;fill:#433C32;"
-                                d="M748.315,377.037c-4.91,0-9.647-0.734-14.116-2.087
-                                                     c8.16,8.009,19.397,12.873,31.732,12.665c24.433-0.414,43.904-20.555,43.492-44.987c-0.231-13.651-6.625-25.75-16.48-33.701
-                                                     c2.596,5.954,4.046,12.525,4.046,19.436C796.989,355.245,775.197,377.037,748.315,377.037" />
-
-                        </g>
-
-                    </g>
-
-                    <g class="prize-title">
-                        <g class="position-crown-stars" style="transform: translate(.2em, 0)">
-                            <g class="stars">
-                                <g class="popIn star-3">
-                                    <path style="fill:#FFF0B3;"
-                                        d="M496.594,213.661c-4.66-49.014-13.221-110.411,0.624-160.313l18.653,0.344" />
-                                    <path style="fill:#FCDD5E;" d="M515.87,53.691l15.967,20.419c-22.406,38.005-35.243,139.549-35.243,139.549
-                                             s5.62-86.498,7.613-106.463C507.976,69.425,515.87,53.691,515.87,53.691" />
-                                    <polygon style="fill:#FFCC00;" points="544.529,0 544.114,22.754 562.626,35.994 540.855,42.632 533.981,64.327 520.94,45.675 
-                                                     498.18,45.843 511.891,27.678 504.698,6.087 526.214,13.512 " />
-                                    <polygon style="fill:#FF9000;"
-                                        points="540.855,42.632 562.626,35.994 544.114,22.754 544.529,0 520.94,45.675 533.981,64.327" />
-                                </g>
-                                <g class="popIn star-2">
-                                    <polygon style="fill:#FFCC00;"
-                                        points="380.469,93.795 402.919,102.689 422.974,89.239 421.453,113.336 440.442,128.251 
-                                                     417.052,134.249 408.734,156.917 395.8,136.528 371.668,135.623 387.065,117.022 " />
-                                    <path style="fill:#FCDD5E;"
-                                        d="M423.414,139.264l20.175-5.058c13.908,12.414,36.24,65.608,38.084,100.158" />
-                                    <path style="fill:#FFF0B3;" d="M481.673,234.366c0,0-27.556-46.072-65.721-71.739c0,0,5.424-13.59,7.463-23.362
-                                             C460.909,169.969,481.673,234.366,481.673,234.366" />
-                                    <polygon style="fill:#FF9000;" points="421.452,113.336 422.974,89.239 402.919,102.689 380.469,93.795 417.052,134.249 
-                                                     440.443,128.251 " />
-                                </g>
-                                <g class="popIn star-4">
-                                    <path style="fill:#FFF0B3;"
-                                        d="M521.067,224.482c8.939-39.97,51.228-92.719,67.42-101.959l19.008,9.145" />
-                                    <path style="fill:#FCDD5E;"
-                                        d="M607.494,131.668c1.624,6.734,2.876,20.938,2.876,20.938
-                                             c-51.59,24.752-89.303,71.876-89.303,71.876S539.354,170.132,607.494,131.668" />
-                                    <polygon style="fill:#FF9000;"
-                                        points="662.683,95.615 638.801,99.192 622.316,81.548 618.338,105.362 596.461,115.587 
-                                                     617.884,126.73 620.85,150.691 638.067,133.763 661.776,138.348 650.995,116.744 " />
-                                    <polygon style="fill:#FFCC00;" points="618.338,105.363 622.316,81.548 638.801,99.191 662.683,95.615 617.884,126.73 
-                                                     596.461,115.586 " />
-                                </g>
-                                <g class="popIn star-5">
-                                    <path style="fill:#FFF0B3;"
-                                        d="M538.817,237.658c23.059-25.177,64.9-48.854,83.504-47.652l10.832,18.098" />
-                                    <path style="fill:#FCDD5E;"
-                                        d="M633.153,208.104c-2.352,6.516-9.129,19.061-9.129,19.061
-                                             c-33.375-8.396-85.207,10.493-85.207,10.493S565.763,206.212,633.153,208.104" />
-                                    <polygon style="fill:#FF9000;"
-                                        points="699.076,208.391 677.171,198.229 673.125,174.426 656.69,192.115 632.798,188.607 
-                                                     644.545,209.701 633.825,231.336 657.52,226.684 674.786,243.564 677.684,219.594 " />
-                                    <polygon style="fill:#FFCC00;" points="656.69,192.115 673.126,174.425 677.171,198.229 699.076,208.391 644.546,209.701 
-                                                     632.798,188.606 " />
-                                </g>
-                                <g class="popIn star-1">
-                                    <polygon style="fill:#FFCC00;"
-                                        points="225.077,177.339 246.014,164.267 247.116,139.611 266.019,155.483 289.812,148.91 
-                                                     280.557,171.79 294.162,192.385 269.538,190.654 254.152,209.955 248.189,186.005 " />
-                                    <polygon style="fill:#FF9000;" points="266.019,155.482 247.116,139.611 246.015,164.268 225.076,177.339 280.557,171.791 
-                                                     289.813,148.909 " />
-                                    <path style="fill:#FCDD5E;" d="M295.063,170.222c23.843,4.728,119.33,24.695,171.028,70.662
-                                             c-37.398-44.582-119.098-84.525-164.352-91.743L295.063,170.222z" />
-                                    <path style="fill:#FFF0B3;" d="M295.063,170.222l10.621,20.169c0,0,91.694,6.645,160.407,50.493
-                                             C440.728,217.017,371.035,183.134,295.063,170.222" />
-                                </g>
-                            </g>
-                            <g class="popIn crown">
-                                <path class="is-shadow" style="fill:#000000;stroke-width:2;stroke:black;"
-                                    d="M486.896,278.171c-0.013,0.005-0.025,0.009-0.038,0.013c-0.082,0.028-0.165,0.057-0.246,0.094
-                                                                                         c-0.611,0.282-1.262,0.426-1.932,0.426c-1.791,0-3.433-1.049-4.185-2.674c-0.517-1.117-0.568-2.368-0.143-3.523
-                                                                                         s1.274-2.076,2.391-2.593c0.612-0.283,1.262-0.427,1.933-0.427c1.791,0,3.433,1.049,4.185,2.674
-                                                                                         c0.316,0.683,0.454,1.419,0.409,2.167l9.872,3.611l-8.947-13.925c-0.384,0.107-0.78,0.162-1.183,0.162
-                                                                                         c-1.72,0-3.297-1.008-4.02-2.568c-0.496-1.073-0.545-2.274-0.137-3.385c0.408-1.109,1.223-1.993,2.296-2.489
-                                                                                         c0.587-0.272,1.212-0.41,1.856-0.41c1.72,0,3.297,1.008,4.019,2.567c0.463,1.002,0.525,2.141,0.196,3.184l11.838,8.427
-                                                                                         l-6.045-23.289c-1.623-0.099-3.082-1.081-3.767-2.56c-1.031-2.229-0.056-4.882,2.173-5.912
-                                                                                         c0.592-0.274,1.22-0.413,1.868-0.413c1.73,0,3.318,1.015,4.044,2.585c0.703,1.518,0.471,3.295-0.533,4.59l13.278,20.077
-                                                                                         l1.651-14.629c-0.989-0.426-1.784-1.192-2.245-2.189c-0.496-1.073-0.545-2.274-0.138-3.385
-                                                                                         c0.408-1.109,1.224-1.993,2.296-2.489c0.588-0.272,1.213-0.41,1.857-0.41c1.72,0,3.297,1.008,4.019,2.568
-                                                                                         c0.776,1.681,0.409,3.688-0.915,4.997c-0.194,0.235-0.438,0.458-0.716,0.65l4.417,16.134l3.94-9.783
-                                                                                         c-0.567-0.431-1.022-0.989-1.319-1.632c-0.492-1.065-0.541-2.26-0.136-3.362c0.405-1.102,1.215-1.98,2.281-2.474
-                                                                                         c0.584-0.271,1.205-0.407,1.845-0.407c1.708,0,3.276,1.001,3.993,2.552c0.896,1.934,0.288,4.226-1.444,5.45
-                                                                                         c-0.154,0.131-0.44,0.367-0.815,0.54l2.559,26.987l-1.154-0.058c-0.486-0.024-0.974-0.036-1.465-0.036
-                                                                                         c-10.503,0-21.595,5.413-28.256,13.792l-0.724,0.91L486.896,278.171z" />
-                                <path class="drk-stroke" style="fill:#FFFFFF;stroke-width:2;"
-                                    d="M486.896,278.171c-0.013,0.005-0.025,0.009-0.038,0.013c-0.082,0.028-0.165,0.057-0.246,0.094
-                                                                             c-0.611,0.282-1.262,0.426-1.932,0.426c-1.791,0-3.433-1.049-4.185-2.674c-0.517-1.117-0.568-2.368-0.143-3.523
-                                                                             s1.274-2.076,2.391-2.593c0.612-0.283,1.262-0.427,1.933-0.427c1.791,0,3.433,1.049,4.185,2.674
-                                                                             c0.316,0.683,0.454,1.419,0.409,2.167l9.872,3.611l-8.947-13.925c-0.384,0.107-0.78,0.162-1.183,0.162
-                                                                             c-1.72,0-3.297-1.008-4.02-2.568c-0.496-1.073-0.545-2.274-0.137-3.385c0.408-1.109,1.223-1.993,2.296-2.489
-                                                                             c0.587-0.272,1.212-0.41,1.856-0.41c1.72,0,3.297,1.008,4.019,2.567c0.463,1.002,0.525,2.141,0.196,3.184l11.838,8.427
-                                                                             l-6.045-23.289c-1.623-0.099-3.082-1.081-3.767-2.56c-1.031-2.229-0.056-4.882,2.173-5.912
-                                                                             c0.592-0.274,1.22-0.413,1.868-0.413c1.73,0,3.318,1.015,4.044,2.585c0.703,1.518,0.471,3.295-0.533,4.59l13.278,20.077
-                                                                             l1.651-14.629c-0.989-0.426-1.784-1.192-2.245-2.189c-0.496-1.073-0.545-2.274-0.138-3.385
-                                                                             c0.408-1.109,1.224-1.993,2.296-2.489c0.588-0.272,1.213-0.41,1.857-0.41c1.72,0,3.297,1.008,4.019,2.568
-                                                                             c0.776,1.681,0.409,3.688-0.915,4.997c-0.194,0.235-0.438,0.458-0.716,0.65l4.417,16.134l3.94-9.783
-                                                                             c-0.567-0.431-1.022-0.989-1.319-1.632c-0.492-1.065-0.541-2.26-0.136-3.362c0.405-1.102,1.215-1.98,2.281-2.474
-                                                                             c0.584-0.271,1.205-0.407,1.845-0.407c1.708,0,3.276,1.001,3.993,2.552c0.896,1.934,0.288,4.226-1.444,5.45
-                                                                             c-0.154,0.131-0.44,0.367-0.815,0.54l2.559,26.987l-1.154-0.058c-0.486-0.024-0.974-0.036-1.465-0.036
-                                                                             c-10.503,0-21.595,5.413-28.256,13.792l-0.724,0.91L486.896,278.171z" />
-                            </g>
-                        </g>
-                        <g class="prize-title-label popIn">
-                            <text x="50%" y="380" class="prize-2-shadow is-shadow-2" font-family="Roboto Condensed"
-                                font-stretch="condensed">{{StreetlifeTrends()}}!</text>
-                            <text x="50%" y="380" class="prize-2 drk-stroke" font-family="Roboto Condensed"
-                                font-stretch="condensed">{{(StreetlifeTrends)}}!</text>
-                        </g>
-
-                    </g>
-                    <g class="ball-orange ball-left">
-                        <circle style="fill:#FFFFFF;" cx="110.541" cy="398.037" r="66" />
-                        <path style="fill:#FF6600;"
-                            d="M113.481,354.681l-43.998,31.776c0,0-1.74-3.429-5.133-8.799
-                                       c1.959-3.242,32.754-23.71,32.754-23.71l-10.756-6.111l5.622-3.177l13.444,1.711L113.481,354.681z M176.531,396.922
-                                       c0.616,36.445-28.429,66.489-64.874,67.105c-36.445,0.616-66.491-28.429-67.107-64.874s28.429-66.489,64.876-67.105
-                                       C145.871,331.432,175.915,360.477,176.531,396.922z M92.001,460.75c-1.31-3.86-5.193-10.264-16.215-19.129
-                                       c-9.571-7.698-17.197-10.941-22.451-12.259c3.104,5.689,6.612,10.526,11.516,15.268c0.15,0.145,0.312,0.278,0.464,0.422
-                                       c3.182-0.766,5.731-0.188,9.261,2.27c4.071,2.834,6.407,7.824,5.848,8.6C84.199,457.934,88.094,459.576,92.001,460.75z
-                                       M84.692,346.692c-50.134,25.93-9.063,86.308,26.03,63.52C162.266,376.74,116.98,329.993,84.692,346.692z M149.879,450.721
-                                       c-1.018,0-2.114,0.136-3.036,0.876c-0.861,0.69-1.702,1.704-2.452,2.774c-0.073,0.044-0.145,0.089-0.218,0.133
-                                       C146.127,453.356,148.029,452.089,149.879,450.721z M170.204,425.918c-6.3-0.493-16.85,0.697-31.411,11.38
-                                       c-14.222,10.434-17.683,19.688-17.552,25.361c4.143-0.685,7.759-1.771,11.759-3.25c0,0.001,0,0.002,0,0.002
-                                       c0-0.005,0.468-0.01,0.481-0.015c0.074-0.028,0.269-0.057,0.346-0.085c1.574-2.817,4.311-8.725,9.418-12.969
-                                       c7.397-6.147,16.685-9.307,21.286-10.676C166.708,432.548,168.617,429.288,170.204,425.918z M176.009,389.896
-                                       c-0.527-4.273-1.485-8.5-2.851-12.619c0.005,0.005,0.009,0.012,0.014,0.017c-0.043-0.129-0.093-0.256-0.136-0.384
-                                       c0.041,0.122,0.082,0.245,0.123,0.367c-0.824-0.991-1.669-2.219-2.51-3.772c-1.265-2.335-1.732-4.424-1.758-6.242
-                                       c-2.281-4.303-5.073-8.403-8.376-12.211c0.397,6.287,2.479,15.675,5.775,21.884C170.012,383.945,174.188,388.221,176.009,389.896
-                                       z M130.021,381.689c0,0-6.109,5.303-8.492,7.123c-2.033-6.363-10.019-13.871-17.42-9.055c12.269,9.881,4.548,23.923-3.119,28.384
-                                       c-9.775,5.688-17.52,1.757-21.95-6.097c-4.43-7.854-1.773-23.753,18.32-30.742C120.956,363.094,130.021,381.689,130.021,381.689z
-                                       M98.897,386.476c-5.251-6.048-14.224,3.905-12.107,9.252C91.142,406.722,104.148,392.524,98.897,386.476z" />
-                        <path style="opacity:0.3;fill:#433C32;"
-                            d="M60.23,373.447c0-7.279,1.089-14.3,3.093-20.925
-                                                   c-11.871,12.097-19.081,28.753-18.772,47.038c0.612,36.216,30.467,65.08,66.685,64.467c20.235-0.342,38.168-9.818,49.954-24.428
-                                                   c-8.826,3.849-18.565,5.997-28.809,5.997C92.532,445.597,60.23,413.294,60.23,373.447" />
-                    </g>
-                    <g class="ball-red ball-right">
-                        <path style="fill:#FFFFFF;"
-                            d="M890.656,460.22c-8.387,0-16.606-1.639-24.425-4.873c-15.792-6.531-28.097-18.821-34.647-34.608
-                                       c-6.549-15.785-6.56-33.176-0.028-48.968c9.935-24.026,33.154-39.549,59.151-39.549c8.388,0,16.606,1.639,24.425,4.873
-                                       c32.602,13.482,48.159,50.974,34.677,83.576C939.873,444.696,916.654,460.22,890.656,460.22" />
-                        <path style="fill:#FF0000;"
-                            d="M915.131,337.095c-7.819-3.234-16.037-4.873-24.425-4.873c-25.997,0-49.216,15.523-59.151,39.549
-                                       c-6.531,15.792-6.52,33.183,0.029,48.968c6.55,15.786,18.855,28.076,34.647,34.608c7.82,3.234,16.038,4.873,24.425,4.873
-                                       c25.998,0,49.217-15.524,59.152-39.549C963.289,388.069,947.733,350.577,915.131,337.095z M835.936,388.067
-                                       c2.089-19.253,18.462-36.001,41.117-27.818c31.136,11.246,28.783,64.876-9.413,68.019
-                                       C844.342,430.183,833.86,407.188,835.936,388.067z M898.835,459.118c0.321-0.041,0.64-0.093,0.961-0.139
-                                       C899.475,459.025,899.156,459.076,898.835,459.118z M901.916,458.637c0.307-0.055,0.615-0.109,0.921-0.169
-                                       C902.53,458.528,902.223,458.582,901.916,458.637z M905.77,457.834c0.002-0.001,0.005-0.001,0.007-0.002
-                                       C905.774,457.833,905.772,457.834,905.77,457.834z M908.782,457.016c0.17-0.05,0.339-0.102,0.508-0.153
-                                       C909.121,456.914,908.952,456.965,908.782,457.016z M914.737,454.922c-2.92,0.212-8.176,0.666-10.577,1.327
-                                       c-1.55,0.427-4.817,1.788-7.929,3.148c-8.051,0.709-16.332-0.095-24.429-2.607c6.282-3.153,16.628-7.347,30.181-9.346
-                                       c12.346-1.82,18.911,0.264,22.354,2.621C921.277,451.956,918.061,453.572,914.737,454.922z M907.504,339.693
-                                       c-8.306-2.771-13.721-5.063-17.251-6.914c8.291-0.059,16.729,1.501,24.873,4.869c3.255,1.347,6.334,2.941,9.237,4.735
-                                       C920.202,342.737,914.729,342.102,907.504,339.693z M948.602,422.387c-0.924,2.305-1.961,4.151-3.136,6.272
-                                       c-1.646-1.707-3.52-5.388-3.589-9.33c-0.09-5.196,1.949-40.424,6.277-50.44c1.622,3.687,2.902,7.634,3.827,11.748l-3.917,8.699
-                                       l1.208,5.204l2.141-3.147c0,0,1.211,14.95-1.755,26.997c0.036,0.033,0.072,0.053,0.108,0.086c0.171-0.229,0.337-0.491,0.5-0.768
-                                       C949.763,419.275,949.224,420.838,948.602,422.387z M861.949,371.04l10.216,2.151l-7.241,46.581c0,0-5.499-1.708-9.803-3.489
-                                       c-0.199-2.77,3.333-32.876,3.333-32.876l-10.778,3.496l-1.296-6.818L861.949,371.04z" />
-                        <path style="opacity:0.3;fill:#433C32;"
-                            d="M872.578,450.166c-7.212,0-14.169-1.085-20.725-3.088
-                                                   c4.32,3.295,9.128,6.096,14.386,8.271c32.647,13.5,70.056-2.021,83.556-34.666c9.625-23.274,4.49-48.962-11.074-66.688
-                                                   c3.018,7.871,4.687,16.41,4.687,25.342C943.408,418.455,911.697,450.166,872.578,450.166" />
-                    </g>
-                </svg>
+                <li class="first"><a href="#">Reparatie wasmaschine</a></li>
+                <li class="second"><a href="#">Reparatie Oven/Magnetron</a>
+                    <ul class="sub1">
+                        <li class="button1">
+                            <a href="#">
+                                <h3>Try To</h3>
+                            </a>
+                        </li>
+                        <li class="button1">
+                            <a href="#">
+                                <h3>Hover</h3>
+                            </a>
+                        </li>
+                        <li class="button1">
+                            <a href="#">
+                                <h3>Me</h3>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="third"><a href="#">Reparatie Droger/Vaatwasser</a>
+                    <ul class="sub2">
+                        <li class="button2">
+                            <a href="#">
+                                <h3>padding</h3>
+                            </a>
+                        </li>
+                        <li class="button2">
+                            <a href="#">
+                                <h3>margin</h3>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="fourth"><a href="#">Reparatie Koelkast</a></li>
             </div>
+        </nav>
+    </div>
+
+
+    <h2 class="text">
+        M. Aydin
+        Inkoop-Verkoop
+        En reparatie van nieuwe en tweedehands witgoed
+
+        Den Haag
+        Witgoed
+
+        denhaag-witgoed@hotmail.com
+
+        0681055072
+        0622513085 Weimarstraat 334
+        2562 Den Haag
+
+    </h2>
+
+
+    <br>
+
+
+
+
+
+
+
+
+
+    <p class="text">design by Ryan</p>
+
+
+
+
+
+    <div class="box-canvas">
+        <div class="machine">
+            <div class="drawer"></div>
+            <div class="panel"></div>
+            <div class="door">
+                <div class="drum"></div>
+            </div>
+
         </div>
-
-        <a href="/inlog.html">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            18+Bingo
-        </a>
-        <a href="/registry.html">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Speel mee
-        </a>
-        <a href="#">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Meld aan
-        </a>
-      <a href="#">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            StreetlifeTrends
-        </a>    </div>
-
-    </select>
-    </td>
-    </tr>
-    </table>
-
-    </form>
-
-
-
-    <script>
-        var app = new Vue({
-            el: '#app',
-            data: {
-                prize: 'BINGHETTO',
-                rooms: [
-                    'rubino',
-                    'smeraldo',
-                    'zaffiro',
-                    'diamante'
-                ],
-                prizeClass: 'bingo',
-                roomSelected: 'rubino'
-            },
-            methods: {
-                getPrize() {
-                    let str = this.prize.toLowerCase();
-                    this.prizeClass = str;
-                    //str = str === 'bingo' ? this.prize + '!' : this.prize;
-                    //return str;
-                    return str.charAt(0).toUpperCase() + str.slice(1);
-                }
-            }
-        });
-    </script>
+    </div>
 
 </body>
 
